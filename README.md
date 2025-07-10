@@ -88,6 +88,3 @@ You can generate the full environment using `pip freeze > requirements.txt`
 ![Minimal](assets/Minimal_template.png)
 
 
-## 🔒 License
-
-[MIT](https://choosealicense.com/licenses/mit/)
