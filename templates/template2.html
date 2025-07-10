@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            margin: 40px;
+            font-size: 12pt;
+            color: #222;
+        }
+       .header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0;
+    gap: 20px;
+    border-bottom: none;
+}
+.header > div {
+    flex: 1;
+}
+
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 20px;
+            border: 2px solid #0077b6;
+        }
+        h1 {
+            margin: 0;
+            font-size: 26pt;
+        }
+        .contact p {
+            margin: 2px 0;
+        }
+        h2 {
+            margin-top: 20px;
+            margin-bottom: 5px;
+            color: #0077b6;
+            border-bottom: 1px solid #0077b6;
+            padding-bottom: 5px;
+        }
+        .two-columns {
+            display: flex;
+            gap: 50px;
+        }
+        .left, .right {
+            flex: 1;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        {% if data.photo_url and not pdf %}
+  <img src="{{ data.photo_url }}" class="profile-pic">
+{% elif data.photo_path and pdf %}
+  <img src="file:///{{ data.photo_path.replace('\\', '/') }}" class="profile-pic">
+{% endif %}
+
+
+        <div>
+            <h1>{{ data.name }}</h1>
+            <div class="contact">
+                <p>{{ data.email }} | {{ data.phone }}</p>
+                <p>{{ data.location }}</p>
+                <p>{{ data.linkedin }} | {{ data.github }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="two-columns">
+        <div class="left">
+
+            <h2>Summary</h2>
+            <p>{{ data.summary }}</p>
+
+            <h2>Skills</h2>
+            <ul>
+                {% for skill in data.skills.split(',') %}
+                    <li>{{ skill.strip() }}</li>
+                {% endfor %}
+            </ul>
+
+            <h2>Education</h2>
+            <p>{{ data.education }}</p>
+
+        </div>
+        <div class="right">
+
+            <h2>Internships</h2>
+            {% for intern in data.internships %}
+                <p>
+                    <strong>{{ intern.title }}</strong> – {{ intern.company }}<br>
+                    <em>{{ intern.duration }}</em><br>
+                    {{ intern.description }}
+                </p>
+            {% endfor %}
+
+            <h2>Projects</h2>
+            {% for project in data.projects %}
+                <p>
+                    <strong>{{ project.title }}</strong> ({{ project.tech_stack }})<br>
+                    {{ project.description }}<br>
+                    <a href="{{ project.link }}">{{ project.link }}</a>
+                </p>
+            {% endfor %}
+
+            <h2>Achievements</h2>
+            <ul>
+                {% for achievement in data.achievements %}
+                    <li>{{ achievement.strip() }}</li>
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+
+</body>
+</html>

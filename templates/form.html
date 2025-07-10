@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zero-Effort Resume Generator</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            margin: 30px;
+        }
+        input, textarea, select {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .section {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Zero-Effort Resume Generator</h1>
+
+    <form action="/resume" method="POST" enctype="multipart/form-data" id="resumeForm">
+        <div class="section">
+            <label>Name:</label><input name="name" required>
+            <label>Email:</label><input name="email" required>
+            <label>Phone:</label><input name="phone" required>
+            <label>Location:</label><input name="location">
+            <label>LinkedIn:</label><input name="linkedin">
+            <label>GitHub:</label><input name="github">
+            <label>Summary:</label><textarea name="summary" required></textarea>
+            <label>Skills (comma-separated):</label><input name="skills" required>
+            <label>Education:</label><textarea name="education"></textarea>
+            <label>Profile Photo:</label><input type="file" name="photo">
+        </div>
+
+        <div class="section" id="internshipsSection">
+            <h3>Internships</h3>
+            <div class="internship">
+                <input name="intern_title" placeholder="Title">
+                <input name="intern_company" placeholder="Company">
+                <input name="intern_duration" placeholder="Duration">
+                <textarea name="intern_description" placeholder="Description"></textarea>
+            </div>
+        </div>
+        <button type="button" onclick="addInternship()">+ Add Internship</button>
+
+        <div class="section" id="projectsSection">
+            <h3>Projects</h3>
+            <div class="project">
+                <input name="project_title" placeholder="Title">
+                <input name="tech_stack" placeholder="Tech Stack">
+                <textarea name="project_description" placeholder="Description"></textarea>
+                <input name="project_link" placeholder="Link">
+            </div>
+        </div>
+        <button type="button" onclick="addProject()">+ Add Project</button>
+
+        <div class="section">
+            <label>Achievements (separated by `;`):</label>
+            <textarea name="achievements"></textarea>
+            <label>Select Template:</label>
+            <select name="template">
+                <option value="template1">Classic</option>
+                <option value="template2">Modern</option>
+                <option value="template3">Minimal</option>
+            </select>
+        </div>
+
+        <input type="submit" value="Generate Preview">
+        <button type="submit" formaction="/download">Download PDF</button>
+    </form>
+
+    <script>
+        function addInternship() {
+            const section = document.getElementById("internshipsSection");
+            const div = document.createElement("div");
+            div.classList.add("internship");
+            div.innerHTML = `
+                <input name="intern_title" placeholder="Title">
+                <input name="intern_company" placeholder="Company">
+                <input name="intern_duration" placeholder="Duration">
+                <textarea name="intern_description" placeholder="Description"></textarea>
+            `;
+            section.appendChild(div);
+        }
+
+        function addProject() {
+            const section = document.getElementById("projectsSection");
+            const div = document.createElement("div");
+            div.classList.add("project");
+            div.innerHTML = `
+                <input name="project_title" placeholder="Title">
+                <input name="tech_stack" placeholder="Tech Stack">
+                <textarea name="project_description" placeholder="Description"></textarea>
+                <input name="project_link" placeholder="Link">
+            `;
+            section.appendChild(div);
+        }
+    </script>
+</body>
+</html>

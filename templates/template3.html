@@ -1,0 +1,96 @@
+<html>
+<head>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+            margin: 40px;
+            font-size: 12pt;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #333;
+            margin-bottom: 20px;
+        }
+        .info {
+            width: 80%;
+        }
+        .profile {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 24pt;
+        }
+        h2 {
+            margin-top: 20px;
+            border-bottom: 1px solid #aaa;
+            padding-bottom: 5px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        a {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="info">
+            <h1>{{ data.name }}</h1>
+            <p>{{ data.email }} | {{ data.phone }}</p>
+            <p>{{ data.location }}</p>
+            <p>{{ data.linkedin }} | {{ data.github }}</p>
+        </div>
+      {% if data.photo_url and not pdf %}
+  <img src="{{ data.photo_url }}" class="profile">
+{% elif data.photo_path and pdf %}
+  <img src="file:///{{ data.photo_path.replace('\\', '/') }}" class="profile">
+{% endif %}
+
+
+    </div>
+
+    <h2>Summary</h2>
+    <p>{{ data.summary }}</p>
+
+    <h2>Skills</h2>
+    <ul>
+        {% for skill in data.skills.split(',') %}
+            <li>{{ skill.strip() }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Education</h2>
+    <p>{{ data.education }}</p>
+
+    <h2>Internships</h2>
+    {% for intern in data.internships %}
+        <p><strong>{{ intern.title }}</strong> – {{ intern.company }}<br>
+        <em>{{ intern.duration }}</em><br>
+        {{ intern.description }}</p>
+    {% endfor %}
+
+    <h2>Projects</h2>
+    {% for project in data.projects %}
+        <p><strong>{{ project.title }}</strong> ({{ project.tech_stack }})<br>
+        {{ project.description }}<br>
+        <a href="{{ project.link }}">{{ project.link }}</a></p>
+    {% endfor %}
+
+    <h2>Achievements</h2>
+    <ul>
+        {% for achievement in data.achievements %}
+            <li>{{ achievement.strip() }}</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
